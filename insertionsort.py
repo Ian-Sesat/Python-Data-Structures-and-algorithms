@@ -13,5 +13,6 @@ def insertionSort(A):
 	return A
 
 ourList=[50,40,80,70,60]
+print(ourList)
 mySortedList=insertionSort(ourList)
 print(mySortedList)
