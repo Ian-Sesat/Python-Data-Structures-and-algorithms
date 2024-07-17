@@ -1,15 +1,32 @@
-def bubbleSort(A):
-	for i in range (0, len(A) - 1):
-		done = True
-		for j in range (0, len(A) - i - 1):
-			if A[j] > A[j+1]:
-				A[j], A[j+1] = A[j+1], A[j]
-				done = False
-		if done:
-			return
+def bubble_sort(elements,key):
+    size = len(elements)
 
-ourList=[50,40,80,70,60]
-print(ourList)
-mySortedList=bubbleSort(ourList)
-print(ourList)
-		
+    for i in range(size-1):
+        swapped = False
+        for j in range(size-1-i):
+            a=elements[j][key]
+            b=elements[j+1][key]
+            if  a>b :
+                tmp = elements[j]
+                elements[j] = elements[j+1]
+                elements[j+1] = tmp
+                swapped = True
+
+        if not swapped:
+            break
+
+def main():
+    elements = [
+        { 'name': 'miley',   'transaction_amount': 1000, 'device': 'iphone-10'},
+        { 'name': 'dan', 'transaction_amount': 400,  'device': 'google pixel'},
+        { 'name': 'kristine',  'transaction_amount': 200,  'device': 'vivo'},
+        { 'name': 'amerix',  'transaction_amount': 800,  'device': 'iphone-8'},
+    ]
+	#Sorting based on transaction_amount:
+    bubble_sort(elements, key='transaction_amount')
+    print('Sorting based on transaction amount returns: {}'.format(elements))
+    #Sorting based on name:
+    bubble_sort(elements, key='name')
+    print('Sorting based on name returns: {}'.format(elements))
+if __name__ == '__main__':
+    main()
