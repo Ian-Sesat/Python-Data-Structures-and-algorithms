@@ -1,32 +1,44 @@
-import sys
+# you can use this to sort strings too
+def merge_sort(elements, key, descending=False):
+    size = len(elements)
 
-def mergeSort(A):
-	mergeSort2(A, 0, len(A)-1)
-	
-def mergeSort2(A, first, last):
-	if first < last:
-		middle = (first + last)//2
-		mergeSort2(A, first, middle)
-		mergeSort2(A, middle+1, last)
-		merge(A, first, middle, last)
-		
-def merge(A, first, middle, last):
-	L = A[first:middle+1]
-	R = A[middle+1:last+1]
-	L.append(sys.maxsize)
-	R.append(sys.maxsize)
-	i = j = 0
-	
-	for k in range (first, last+1):
-		if L[i] <= R[j]:
-			A[k] = L[i]
-			i += 1
-		else:
-			A[k] = R[j]
-			j += 1
-	return A
+    if size == 1:
+        return elements
 
-ourList=[50,40,80,70,60]
-print(ourList)
-mySortedList=mergeSort(ourList)
-print(ourList)
+    left_list = merge_sort(elements[0:size//2], key, descending)
+    right_list = merge_sort(elements[size//2:], key, descending)
+    sorted_list = merge(left_list, right_list, key, descending)
+
+    return sorted_list
+
+    
+def merge(left_list, right_list, key, descending=False):
+    merged = []
+    if descending:
+        while len(left_list) > 0 and len(right_list) > 0:
+            if left_list[0][key] >= right_list[0][key]:
+                merged.append(left_list.pop(0))
+            else:
+                merged.append(right_list.pop(0))
+
+    else:
+        while len(left_list) > 0 and len(right_list) > 0:
+            if left_list[0][key] <= right_list[0][key]:
+                merged.append(left_list.pop(0))
+            else:
+                merged.append(right_list.pop(0))
+
+    merged.extend(left_list)
+    merged.extend(right_list)
+    return merged
+
+if __name__ == '__main__':
+    elements = [
+        { 'name': 'vedanth',   'age': 17, 'time_hours': 1},
+        { 'name': 'rajab', 'age': 12,  'time_hours': 3},
+        { 'name': 'vignesh',  'age': 21,  'time_hours': 2.5},
+        { 'name': 'chinmay',  'age': 24,  'time_hours': 1.5},
+    ]
+
+    sorted_list = merge_sort(elements, key='name', descending=True)
+    print(sorted_list)
